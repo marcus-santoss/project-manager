@@ -1,0 +1,31 @@
+{% extends 'core/base.html' %}
+
+<!-- PAGE TITLE -->
+{% block page_title %}
+    {% if object.id %}
+        Atualização de
+    {% else %}
+        Nov{{ article }}
+    {% endif %}
+    {{ model }}
+{% endblock %}
+
+<!-- PAGE DESCRIPTION -->
+{% block page_description %}
+    {{ description }}
+{% endblock %}
+
+{% block content_header %}
+    <div class="row my-2">
+        <div class="col-3 offset-9 text-end">
+            <a href="{{ url_list }}" class="btn btn-raised-black">
+                <i class="material-icons">list</i>&nbsp;Listar {{ model_plural }}
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+<!-- CONTENT -->
+{% block page_content %}
+    {% include 'core/components/model_form.html' with cancel_url=url_list %}
+{% endblock %}

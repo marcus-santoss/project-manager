@@ -1,0 +1,47 @@
+model_info:
+  model: Atividade
+  article: a
+  model_plural: Atividades
+  article_plural: as
+pages:
+  list:
+    description: Listagem das Atividades
+    table_cols:
+      - name: project.title
+        label: Projeto
+      - name: title
+        label: Título
+      - name: status::StatusChoices # ENUM
+        label: Status
+  create:
+    description: Criação de uma nova Atividade
+  update:
+    description: Atualização de uma Atividade
+  delete:
+    target_field: title
+    description: Remoção do registro de uma Atividade
+  detail:
+    description: Visualização dos detalhes da Atividade
+    target_field: title
+    fields:
+      - name: title
+        label: Título
+        size: 6
+      - name: status::StatusChoices
+        label: Status do Atividade
+        size: 6
+      - name: due_date
+        label: Data Estimada de Término da Tarefa
+        size: 6
+      - name: project.title
+        label: Projeto
+        size: 6
+      - name: description
+        label: Descrição do Atividade
+        size: 12
+urls:
+  url_list: "/project/task/list"
+  url_create: "/project/task/create"
+  url_update: "/project/task/update/{uuid}"
+  url_detail: "/project/task/detail/{uuid}"
+  url_delete: "/project/task/delete/{uuid}"

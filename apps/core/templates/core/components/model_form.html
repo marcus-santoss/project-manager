@@ -1,0 +1,61 @@
+{% load widget_tweaks %}
+
+{% include 'core/components/messages_form.html' %}
+
+<form method="post" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% for hidden_field in form.hidden_fields %}
+        {{ hidden_field }}
+    {% endfor %}
+
+    <div class="row text-start">
+        {% for field in form.visible_fields %}
+            <div class="col-12">
+                <div class="form-group">
+                    {{ field.label_tag }}
+                    {% if form.is_bound %}
+                        {% if field.errors %}
+                            {% if field.field.widget.input_type == 'select' %}
+                                {% render_field field class="form-control form-select is-invalid" data-size="5" data-live-search="true" data-style='btn btn-link' %}
+                            {% else %}
+                                {% render_field field class="form-control is-invalid" %}
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <div class="invalid-feedback">
+                                    {{ error }}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            {% if field.field.widget.input_type == 'select' %}
+                                {% render_field field class="form-control form-select" data-size="5" data-live-search="true" data-style='btn btn-link' %}
+                            {% else %}
+                                {% render_field field class="form-control" %}
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        {% if field.field.widget.input_type == 'select' %}
+                            {% render_field field class="form-control form-select" data-size="5" data-live-search="true" data-style='btn btn-link' %}
+                        {% else %}
+                            {% render_field field class="form-control" %}
+                        {% endif %}
+                    {% endif %}
+                    {% if field.help_text %}
+                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                    {% endif %}
+                </div>
+                <br>
+            </div>
+        {% endfor %}
+        <div class="row">
+            <div class="col-6 offset-3 text-center">
+                <a href="{{ cancel_url }}" class="btn  btn-raised-black">
+                    <i class="material-icons">delete</i>&nbsp;Cancelar
+                </a>
+                <button type="submit" class="btn  btn-raised-black">
+                    <i class="material-icons">save</i>&nbsp;&nbsp;Salvar&nbsp;&nbsp;
+                </button>
+            </div>
+        </div>
+    </div>
+</form>

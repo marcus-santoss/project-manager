@@ -1,1 +1,0 @@
-"""Views do app Project."""

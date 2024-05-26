@@ -1,0 +1,62 @@
+model_info:
+  model: Projeto
+  article: o
+  model_plural: Projetos
+  article_plural: os
+pages:
+  list:
+    description: "Listagem de Projetos"
+    table_cols:
+      - name: title
+        label: Título
+      - name: start_date
+        label: Data Início
+      - name: dead_line
+        label: Dead Line
+      - name: status::StatusChoices # ENUM
+        label: Status
+  create:
+    description: Criação de um novo Projeto
+  update:
+    description: Atualização de um Projeto
+  delete:
+    target_field: title
+    description: Remoção do registro de um Projeto
+  detail:
+    description: Visualização dos detalhes do Projeto
+    target_field: title
+    fields:
+      - name: title
+        label: Título
+        size: 6
+      - name: status::StatusChoices
+        label: Status do Projeto
+        size: 6
+      - name: start_date
+        label: Data de Início
+        size: 6
+      - name: dead_line
+        label: Dead Line
+        size: 6
+      - name: assigned_to.name
+        label: Responsável do Projeto
+        size: 12
+      - name: overview
+        label: Descrição do Projeto
+        size: 12
+    tables:
+      - name: Atividades
+        target_field: tasks.all()
+        cols:
+          - name: title
+            label: Título
+          - name: status::StatusChoices
+            label: Status do Atividade
+          - name: due_date
+            label: Estimativa de Término
+urls:
+  url_list: "/project/list"
+  url_create: "/project/create"
+  url_update: "/project/update/{uuid}"
+  url_detail: "/project/detail/{uuid}"
+  url_delete: "/project/delete/{uuid}"

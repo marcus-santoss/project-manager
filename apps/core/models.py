@@ -24,12 +24,9 @@ class BaseModel(models.Model):
 class Tag(BaseModel):
     key = models.CharField("key", max_length=60, null=False, blank=False)
     value = models.CharField("value", max_length=60, null=False, blank=False)
-    description = models.CharField(
-        "description", max_length=120, null=False, blank=False
-    )
 
     class Meta:
         unique_together = "key", "value"
 
     def __str__(self) -> str:
-        return self.description
+        return self.key + ": " + self.value

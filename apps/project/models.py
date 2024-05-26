@@ -1,6 +1,6 @@
 """Modelos de dados do app Project."""
+
 from django.db import models
-from django.utils.translation import gettext_lazy as _
 
 from apps.core.models import BaseModel, Tag
 
@@ -8,79 +8,102 @@ from apps.core.models import BaseModel, Tag
 class StatusChoices(models.TextChoices):  # pylint: disable=too-many-ancestors
     """Enum para os status do projeto."""
 
-    TODO = "T", _("Todo")
-    DOING = "D", _("DOING")
-    VALIDATION = "V", _("Validation")
-    SUCCESS = "S", _("Success")
-    CANCELLED = "C", _("Cancelled")
-    BLOCKED = "B", _("Blocked")
+    TODO = "N", "Não Iniciado"
+    DOING = "F", "Em Progresso"
+    VALIDATION = "V", "Em Validação"
+    SUCCESS = "S", "Finalizado com Sucesso"
+    CANCELLED = "C", "Cancelado"
+    BLOCKED = "B", "Bloqueado (Aguardando)"
 
 
-class Squad(BaseModel):
-    """Class  mínima para abstração das squads de clientes."""
+class ClientLevelChoices(models.TextChoices):  # pylint: disable=too-many-ancestors
+    """Enum para os status do projeto."""
 
-    name = models.CharField(
-        _("Squad Name"), null=False, blank=False, max_length=255, unique=True
-    )
+    SENIOR = "S", "Senior"
+    PLENO = "P", "Pleno"
+    JUNIR = "J", "Junior"
 
 
 class Client(BaseModel):
     """Classe mínima para abstração de clientes."""
 
     name = models.CharField(
-        _("Name"), null=False, blank=False, max_length=255, unique=True
+        "Nome", null=False, blank=False, max_length=150, unique=True
     )
-    email = models.EmailField(_("E-Mail"), null=False, blank=False, unique=True)
-    squad = models.ForeignKey(
-        Squad, verbose_name=_("Squad"), on_delete=models.SET_NULL, null=True
+    role = models.CharField(
+        "Cargo", null=True, blank=True, max_length=50, default="Recurso"
     )
+    level = models.CharField(
+        "Nível",
+        blank=False,
+        null=False,
+        max_length=1,
+        choices=ClientLevelChoices.choices,
+        default=ClientLevelChoices.JUNIR,
+    )
+    email = models.EmailField("E-Mail", null=False, blank=False, unique=True)
+    description = models.TextField("Descrição", null=False, blank=False)
+
+    def __str__(self) -> str:
+        return self.name
 
 
 class Project(BaseModel):
     """Classe mínima para abstração de projetos"""
 
-    class ProjectType(models.TextChoices):  # pylint: disable=too-many-ancestors
-        """Enum para abstração dos tipos de projeto."""
-
-        FINANCIAL = "F", _("Financial")
-        ELETRICAL = "T", _("Eletrical")
-        DEVELOPMENT = "D", _("Development")
-        BUSSINESS = "B", _("Business")
-        MARKETING = "M", _("Marketing")
-
     title = models.CharField(
-        _("Project Title"), null=False, blank=False, max_length=255, unique=True
+        "Título do Projeto", null=False, blank=False, max_length=255, unique=True
     )
-    status = models.CharField(
-        _("Project Status"),
-        max_length=1,
+    start_date = models.DateField("Data Inicial", null=False, blank=False)
+    dead_line = models.DateField("Dead Line", null=False, blank=False)
+    overview = models.TextField("Visão Geral", null=False, blank=False)
+    assigned_to = models.ForeignKey(
+        Client,
+        verbose_name="Responsável do Projeto",
+        on_delete=models.PROTECT,
         null=False,
         blank=False,
-        choices=StatusChoices,
-        default=StatusChoices.TODO,
+        related_name="projects",
     )
-    project_type = models.CharField(
-        _("Project Type"),
-        null=False,
-        blank=False,
-        max_length=1,
-        choices=ProjectType.choices,
-    )
-    start_date = models.DateField(_("Start Date"), null=False, blank=False)
-    dead_line = models.DateField(_("Deadline Date"), null=False, blank=False)
-    overview = models.TextField(_("Overview"), null=False, blank=False)
-    tags = models.ManyToManyField(Tag, verbose_name=_("Tags"), blank=True)
+
+    @property
+    def status(self) -> StatusChoices:
+        """Determina o status do projeto baseado no status das tarefas"""
+
+        tasks_count: int = self.tasks.count()
+        todo_count: int = self.tasks.filter(status=StatusChoices.TODO).count()
+        if tasks_count < 1 or todo_count == tasks_count:
+            return StatusChoices.TODO
+
+        blocked_count: int = self.tasks.filter(status=StatusChoices.BLOCKED).count()
+        if blocked_count > 0:
+            return StatusChoices.BLOCKED
+
+        canceled_count: int = self.tasks.filter(status=StatusChoices.CANCELLED).count()
+        if canceled_count == tasks_count:
+            return StatusChoices.CANCELLED
+
+        validation_count: int = self.tasks.filter(
+            status=StatusChoices.VALIDATION
+        ).count()
+        if validation_count == tasks_count:
+            return StatusChoices.VALIDATION
+
+        return StatusChoices.DOING
+
+    def __str__(self) -> str:
+        return self.title
 
 
 class Task(BaseModel):
     """Classe mínima para abstração das tasks."""
 
     title = models.CharField(
-        _("Project Title"), null=False, blank=False, max_length=255, unique=True
+        "Título da Tarefa", null=False, blank=False, max_length=255, unique=True
     )
-    description = models.TextField(_("Description"), null=False, blank=False)
+    description = models.TextField("Descrição", null=False, blank=False)
     status = models.CharField(
-        _("Task Status"),
+        "Status",
         max_length=1,
         null=False,
         blank=False,
@@ -88,25 +111,12 @@ class Task(BaseModel):
         default=StatusChoices.TODO,
     )
 
-    due_date = models.DateField(_("Due Date"), null=False, blank=False)
-    tags = models.ManyToManyField(Tag, verbose_name=_("Tags"), blank=True)
-    assigned_to = models.ForeignKey(
-        Client,
-        verbose_name=_("Assigned To"),
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-    )
-    parent = models.ForeignKey(
-        "self",
-        verbose_name=_("Parent Task"),
-        null=True,
-        blank=True,
+    due_date = models.DateField("Data Estimada do Fim", null=False, blank=False)
+    project = models.ForeignKey(
+        Project,
+        verbose_name="Projeto",
+        on_delete=models.CASCADE,
+        null=False,
+        blank=False,
         related_name="tasks",
-        on_delete=models.PROTECT,
     )
-
-    @property
-    def subtasks(self):
-        """Propiedade para consulta das subtasks de uma task"""
-        return self.objects.filter(parent=self.id).order_by("title")

@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %}
+{% load core %}
+
+<!-- PAGE TITLE -->
+{% block page_title %}
+    {{ model_plural }}
+{% endblock %}
+
+<!-- PAGE DESCRIPTION -->
+{% block page_description %}
+    <span class="text-white-75">{{ description }}</span>
+{% endblock %}
+
+<!-- CONTENT HEADER -->
+{% block content_header %}
+    <div class="row my-2">
+        <div class="col-3 offset-9 text-end">
+            <a href="{{ url_create }}" class="btn btn-raised-black">
+                <i class="material-icons">add_box</i>&nbsp;Nov{{ article }} {{ model }}
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+<!-- CONTENT -->
+{% block page_content %}
+    <table class="data-table">
+        <thead>
+        <tr>
+            <th>#</th>
+            {% for col in table_cols %}
+                <th>{{ col.label }}</th>
+            {% endfor %}
+            <th>Opções</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for object in object_list %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                {% for col in table_cols %}
+                    <td>{{ object|get_field_value:col.name }}</td>
+                {% endfor %}
+                <td>
+                    <a class="btn btn-raised-black btn-sm"
+                       href="{{ url_detail|fill_url:object.id }}">
+                        <i class="material-icons">visibility</i>
+                    </a>
+                    <a class="btn btn-raised-black btn-sm"
+                       href="{{ url_update|fill_url:object.id }}">
+                        <i class="material-icons">edit</i>
+                    </a>
+                    <a class="btn btn-raised-black btn-sm"
+                       href="{{ url_delete|fill_url:object.id }}">
+                        <i class="material-icons">delete</i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

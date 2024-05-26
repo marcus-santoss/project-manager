@@ -2,9 +2,10 @@
 import datetime
 
 from django.test import TestCase
+from model_bakery import baker
 
 from apps.core.models import Tag
-from apps.project.models import Project, StatusChoices
+from apps.project.models import Project, StatusChoices, Task
 
 
 class ProjectTest(TestCase):
@@ -35,11 +36,37 @@ class ProjectTest(TestCase):
         self.assertEqual(p.overview, overview)
         self.assertEqual(p.status, StatusChoices.TODO)
         self.assertEqual(p.tags.count(), 2)
+        print(p.tag_as_dict())
 
     def test_create_task(self):
         """Teste para criação de uma nova task."""
-        self.fail()
+        tasks = baker.prepare("project.Task", _quantity=10)
+        project: Project = baker.make(Project, tasks=tasks)
+        self.assertCountEqual(project.tasks.all(), tasks)
 
     def test_create_subtask(self):
         """Teste para criação de uma nova subtastk."""
-        self.fail()
+        task1 = baker.prepare("project.Task")
+        project: Project = baker.make(Project, tasks=[task1])
+        self.assertCountEqual(project.tasks.all(), [task1])
+
+        task2: Task = baker.make("project.Task", parent=task1)
+        self.assertIsNotNone(task2.parent)
+        self.assertEqual(task1.title, task2.parent.title)
+
+    def test_create_tags_in_task(self):
+        tag_info = {
+            "importancia": "alta",
+            "natureza": "sem fins lucrativos",
+            "projeto_social": "sim",
+            "aceita_doacoes": "sim",
+        }
+        tags: list[Tag] = []
+        for k, v in tag_info.items():
+            tags.append(Tag.objects.create(key=k, value=v))
+
+        Tag.objects.bulk_create(tags, ignore_conflicts=True)
+        task = baker.make("project.Task", tags=tags)
+        self.assertCountEqual(task.tags.all(), tags)
+        for tag in task.tags.all():
+            print(tag)

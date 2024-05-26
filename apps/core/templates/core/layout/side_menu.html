@@ -1,0 +1,41 @@
+<div id="layoutDrawer_nav">
+    <!-- Drawer navigation-->
+    <nav class="drawer accordion drawer-light bg-white" id="drawerAccordion">
+        <div class="drawer-menu">
+            <div class="nav">
+                <div class="drawer-menu-heading">Menu</div>
+                <a class="nav-link" href="{% url 'project:project.list' %}">
+                    <div class="nav-link-icon">
+                        <i class="material-icons">account_tree</i>
+                    </div>
+                    Projetos
+                </a>
+                <!-- Sinais Biológicos -->
+                <a class="nav-link" href="{% url 'project:client.list' %}">
+                    <div class="nav-link-icon">
+                        <i class="material-icons">groups</i>
+                    </div>
+                    Clientes
+                </a>
+                <!-- Cargos -->
+                <a class="nav-link" href="{% url 'project:task.list' %}">
+                    <div class="nav-link-icon">
+                        <i class="material-icons">task_alt</i>
+                    </div>
+                    Atividades
+                </a>
+            </div>
+        </div>
+
+        <!-- Drawer footer -->
+        <div class="drawer-footer border-top">
+            <div class="d-flex align-items-center">
+                <i class="material-icons text-muted">account_circle</i>
+                <div class="ms-3">
+                    <div class="caption">Logado como:</div>
+                    <div class="small fw-500">Administrador</div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>

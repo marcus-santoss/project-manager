@@ -1,0 +1,14 @@
+<form action="" method="post">
+    {% csrf_token %}
+    <h5>
+        Tem certeza que deseja remover {{ entity_article }} {{ entity_name }}
+        <br><b>{{ object }}</b>?
+    </h5>
+    <hr>
+    <input type="hidden" name="entity" value="{{ object }}"/>
+    <a href="{{ url_cancel }}" class="btn btn-raised-black">
+        <i class="material-icons">close</i>&nbsp;Cancelar</a>
+    <button type="submit" class="btn btn-raised-black">
+        <i class="material-icons">delete</i>&nbsp;Confirmar
+    </button>
+</form>

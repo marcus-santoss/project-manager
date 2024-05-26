@@ -1,0 +1,47 @@
+model_info:
+  model: Cliente
+  article: o
+  model_plural: Clientes
+  article_plural: os
+pages:
+  list:
+    description: Listagem de Clientes
+    table_cols:
+      - name: name
+        label: Nome
+      - name: role
+        label: Cargo
+      - name: level::ClientLevelChoices
+        label: Nível
+  create:
+    description: Cadastro de um novo Cliente
+  update:
+    description: Atualização de um Cliente
+  delete:
+    target_field: name
+    description: Remoção do registro de um Cliente
+  detail:
+    description: Visualização dos detalhes do Cliente
+    target_field: name
+    fields:
+      - name: name
+        label: Nome do Cliente
+        size: 6
+      - name: role
+        label: Cargo
+        size: 6
+      - name: level::ClientLevelChoices
+        label: Nível
+        size: 6
+      - name: email
+        label: E-Mail do Cliente
+        size: 6
+      - name: description
+        label: Descrição do Cliente
+        size: 12
+urls:
+  url_list: "/project/client/list"
+  url_create: "/project/client/create"
+  url_update: "/project/client/update/{uuid}"
+  url_detail: "/project/client/detail/{uuid}"
+  url_delete: "/project/client/delete/{uuid}"

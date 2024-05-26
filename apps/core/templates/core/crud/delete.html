@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+{% load core %}
+<!-- PAGE TITLE -->
+{% block page_title %}
+    Remoção d{{ article }} {{ model }}: {{ object|get_field_value:target_field }}
+{% endblock %}
+
+<!-- PAGE DESCRIPTION -->
+{% block page_description %}
+    {{ description }}
+{% endblock %}
+
+<!-- CONTENT -->
+{% block page_content %}
+    {% include 'core/components/model_confirm_delete.html' with entity_article=article entity_name=model cancel_url=url_list %}
+{% endblock %}

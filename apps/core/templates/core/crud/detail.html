@@ -1,0 +1,82 @@
+{% extends 'core/base.html' %}
+{% load core %}
+
+<!-- PAGE TITLE -->
+{% block page_title %}
+    Detalhes do {{ model }}
+{% endblock %}
+
+<!-- PAGE DESCRIPTION -->
+{% block page_description %}
+    {{ description }}
+{% endblock %}
+
+<!-- CONTENT HEADER -->
+{% block content_header %}
+    <div class="row">
+        <div class="col-3">
+            <a href="{{ url_list }}"
+               class="btn btn-sm btn-raised-black mb-3">
+                <i class="material-icons">arrow_back</i>&nbsp;Listar {{ model_plural }}
+            </a>
+        </div>
+        <div class="col-3 offset-6 text-end">
+            <a href="{{ url_update|fill_url:object.id }}"
+               class="btn btn-sm btn-raised-black mb-3">
+                <i class="material-icons">edit</i>&nbsp;Editar {{ model }}
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+<!-- CONTENT -->
+{% block page_content %}
+    <div class="card-title">{{ object|get_field_value:target_field }}</div>
+    <div class="card-subtitle mb-4">Detalhes d{{ article }} {{ model }}.</div>
+    <div class="row">
+        {% for field in fields %}
+            <div class="col-{{ field.size }} p-3">
+                <mwc-textfield
+                        readonly="readonly"
+                        class="w-100"
+                        label="{{ field.label }}"
+                        outlined=""
+                        value="{{ object|get_field_value:field.name }}">
+                </mwc-textfield>
+            </div>
+        {% endfor %}
+    </div>
+    {% if tables %}
+        </div>
+        </div>
+        <br>
+        <div class="card">
+        <div class="card-body">
+        <div class="row">
+            {% for table in tables %}
+                <h3 class="text-start">{{ table.name }}</h3>
+                <hr>
+                <table class="data-table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    {% for col in table.cols %}
+                        <th>{{ col.label }}</th>
+                    {% endfor %}
+                </tr>
+                </thead>
+                <tbody>
+                {% for task in object|get_field_value:table.target_field %}
+                    <tr>
+                        <th>{{ forloop.counter }}</th>
+                        {% for col in table.cols %}
+                            <td>{{ task|get_field_value:col.name }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+            </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}
