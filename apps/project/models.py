@@ -9,7 +9,7 @@ class StatusChoices(models.TextChoices):  # pylint: disable=too-many-ancestors
     """Enum para os status do projeto."""
 
     TODO = "N", "Não Iniciado"
-    DOING = "F", "Em Progresso"
+    DOING = "D", "Em Progresso"
     VALIDATION = "V", "Em Validação"
     SUCCESS = "S", "Finalizado com Sucesso"
     CANCELLED = "C", "Cancelado"
@@ -120,3 +120,6 @@ class Task(BaseModel):
         blank=False,
         related_name="tasks",
     )
+
+    def __str__(self):
+        return self.title

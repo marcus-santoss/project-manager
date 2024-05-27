@@ -25,6 +25,10 @@ pages:
   detail:
     description: Visualização dos detalhes do Projeto
     target_field: title
+    buttons:
+      - label: Adicionar Atividade
+        url: "/project/{uuid}/task/create/"
+        icon:
     fields:
       - name: title
         label: Título

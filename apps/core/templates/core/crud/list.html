@@ -8,14 +8,14 @@
 
 <!-- PAGE DESCRIPTION -->
 {% block page_description %}
-    <span class="text-white-75">{{ description }}</span>
+    {{ description }}
 {% endblock %}
 
 <!-- CONTENT HEADER -->
 {% block content_header %}
     <div class="row my-2">
         <div class="col-3 offset-9 text-end">
-            <a href="{{ url_create }}" class="btn btn-raised-black">
+            <a href="{{ url_create }}" class="btn btn-raised-primary">
                 <i class="material-icons">add_box</i>&nbsp;Nov{{ article }} {{ model }}
             </a>
         </div>
@@ -39,18 +39,26 @@
             <tr>
                 <td>{{ forloop.counter }}</td>
                 {% for col in table_cols %}
-                    <td>{{ object|get_field_value:col.name }}</td>
+                    {% if forloop.first %}
+                        <td>
+                            <a href="{{ url_detail|fill_url:object.id }}">
+                                {{ object|get_field_value:col.name }}
+                            </a>
+                        </td>
+                    {% else %}
+                        <td>{{ object|get_field_value:col.name }}</td>
+                    {% endif %}
                 {% endfor %}
                 <td>
-                    <a class="btn btn-raised-black btn-sm"
+                    <a class="btn btn-raised-primary btn-sm"
                        href="{{ url_detail|fill_url:object.id }}">
                         <i class="material-icons">visibility</i>
                     </a>
-                    <a class="btn btn-raised-black btn-sm"
+                    <a class="btn btn-raised-primary btn-sm"
                        href="{{ url_update|fill_url:object.id }}">
                         <i class="material-icons">edit</i>
                     </a>
-                    <a class="btn btn-raised-black btn-sm"
+                    <a class="btn btn-raised-primary btn-sm"
                        href="{{ url_delete|fill_url:object.id }}">
                         <i class="material-icons">delete</i>
                     </a>

@@ -14,18 +14,21 @@
 <!-- CONTENT HEADER -->
 {% block content_header %}
     <div class="row">
-        <div class="col-3">
-            <a href="{{ url_list }}"
-               class="btn btn-sm btn-raised-black mb-3">
-                <i class="material-icons">arrow_back</i>&nbsp;Listar {{ model_plural }}
+    <div class="col-12">
+        <a href="{{ url_list }}"
+           class="btn btn-sm btn-raised-primary mb-3">
+            <i class="material-icons">arrow_back</i>&nbsp;Listar {{ model_plural }}
+        </a>
+        <a href="{{ url_update|fill_url:object.id }}"
+           class="btn btn-sm btn-raised-primary mb-3">
+            <i class="material-icons">edit</i>&nbsp;Editar {{ model }}
+        </a>
+        {% for button in buttons %}
+            <a href="{{ button.url|fill_url:object.id }}"
+               class="btn btn-sm btn-raised-{{ button.color|default:"primary" }} mb-3">
+                <i class="material-icons">{{ button.icon|default:"add_box" }}</i>&nbsp;{{ button.label }}
             </a>
-        </div>
-        <div class="col-3 offset-6 text-end">
-            <a href="{{ url_update|fill_url:object.id }}"
-               class="btn btn-sm btn-raised-black mb-3">
-                <i class="material-icons">edit</i>&nbsp;Editar {{ model }}
-            </a>
-        </div>
+        {% endfor %}
     </div>
 {% endblock %}
 
@@ -49,7 +52,6 @@
     {% if tables %}
         </div>
         </div>
-        <br>
         <div class="card">
         <div class="card-body">
         <div class="row">

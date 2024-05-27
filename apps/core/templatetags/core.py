@@ -1,5 +1,6 @@
-from apps.project.models import ClientLevelChoices, StatusChoices
 from django import template
+
+from apps.project.models import ClientLevelChoices, StatusChoices
 
 register = template.Library()
 
@@ -14,8 +15,7 @@ def get_enum_value(enum_clazz, field_name, obj):
     return status_map[getattr(obj, field_name)]
 
 
-@register.filter(name="get_field_value")
-def get_field_value(obj, field: str) -> str:
+def get_value(obj, field: str) -> str:
     if "::" in field:
         field_name, enum_class = field.split("::")
         if enum_class == StatusChoices.__name__:
@@ -39,3 +39,12 @@ def get_field_value(obj, field: str) -> str:
         return getattr(field, prop)
 
     return getattr(obj, field)
+
+
+@register.filter(name="get_field_value")
+def get_field_value(obj, field: str) -> str:
+    value = get_value(obj, field)
+    if isinstance(value, str):
+        if len(value) > 50:
+            return f"{value[:30]}..."
+    return value

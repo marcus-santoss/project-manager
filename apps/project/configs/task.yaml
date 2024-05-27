@@ -23,6 +23,31 @@ pages:
   detail:
     description: Visualização dos detalhes da Atividade
     target_field: title
+    buttons:
+      - label: Não Iniciado
+        url: "/project/task/set-status/{uuid}/N"
+        icon: check
+        color: gray
+      - label: Em Progresso
+        url: "/project/task/set-status/{uuid}/D"
+        icon: check
+        color: info
+      - label: Validação
+        url: "/project/task/set-status/{uuid}/V"
+        icon: check
+        color: warning
+      - label: Sucesso
+        url: "/project/task/set-status/{uuid}/S"
+        icon: check
+        color: success
+      - label: Cancelado
+        url: "/project/task/set-status/{uuid}/C"
+        icon: check
+        color: secondary
+      - label: Bloqueado
+        url: "/project/task/set-status/{uuid}/B"
+        icon: check
+        color: danger
     fields:
       - name: title
         label: Título

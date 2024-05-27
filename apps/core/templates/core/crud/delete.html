@@ -12,5 +12,5 @@
 
 <!-- CONTENT -->
 {% block page_content %}
-    {% include 'core/components/model_confirm_delete.html' with entity_article=article entity_name=model cancel_url=url_list %}
+    {% include 'core/components/model_confirm_delete.html' with url_cancel=url_list entity_article=article entity_name=model %}
 {% endblock %}

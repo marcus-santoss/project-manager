@@ -2,13 +2,13 @@
     {% csrf_token %}
     <h5>
         Tem certeza que deseja remover {{ entity_article }} {{ entity_name }}
-        <br><b>{{ object }}</b>?
+        <br><span class="text-danger">{{ object }}</span> ?
     </h5>
     <hr>
     <input type="hidden" name="entity" value="{{ object }}"/>
-    <a href="{{ url_cancel }}" class="btn btn-raised-black">
+    <a href="{{ url_cancel }}" class="btn btn-raised-danger">
         <i class="material-icons">close</i>&nbsp;Cancelar</a>
-    <button type="submit" class="btn btn-raised-black">
+    <button type="submit" class="btn btn-raised-primary">
         <i class="material-icons">delete</i>&nbsp;Confirmar
     </button>
 </form>

@@ -18,6 +18,11 @@ urlpatterns: list = [
     path(
         "delete/<uuid:pk>/", project.ProjectDeleteView.as_view(), name="project.delete"
     ),
+    path(
+        "<uuid:pid>/task/create/",
+        task.TaskCreateView.as_view(),
+        name="project.create_task",
+    ),
     path("client/list/", client.ClientListView.as_view(), name="client.list"),
     path("client/create/", client.ClientCreateView.as_view(), name="client.create"),
     path(
@@ -40,4 +45,9 @@ urlpatterns: list = [
     path("task/update/<uuid:pk>/", task.TaskUpdateView.as_view(), name="task.update"),
     path("task/detail/<uuid:pk>/", task.TaskDetailView.as_view(), name="task.detail"),
     path("task/delete/<uuid:pk>/", task.TaskDeleteView.as_view(), name="task.delete"),
+    path(
+        "task/set-status/<uuid:pk>/<str:status>/",
+        task.TaskStatusUpdateView.as_view(),
+        name="task.set_status",
+    ),
 ]
