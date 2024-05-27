@@ -12,8 +12,6 @@ RUN poetry install --no-interaction --no-ansi --no-root --only main
 
 COPY . .
 
-RUN python manage.py collectstatic --no-input
-
 EXPOSE 8000/tcp
 CMD python manage.py migrate \
     && gunicorn ProjectManager.wsgi:application \

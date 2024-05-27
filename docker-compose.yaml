@@ -1,3 +1,10 @@
+x-deploy-limits: &deploy-limits
+  deploy:
+    resources:
+      limits:
+        cpus: "1"
+        memory: "1G"
+
 services:
   app:
     build:
@@ -7,8 +14,21 @@ services:
     ports:
       - "8000:8000"
     restart: always
-    deploy:
-      resources:
-        limits:
-          cpus: 1
-          memory: 512M
+    <<: *deploy-limits
+  postgres:
+    container_name: postgres
+    hostname: postgres
+    image: postgres:14.5
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data:rw
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: project_manager
+    restart: always
+    <<: *deploy-limits
+
+volumes:
+  pg_data: { }
