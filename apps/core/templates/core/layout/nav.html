@@ -1,3 +1,4 @@
+{% load static %}
 <nav class="top-app-bar navbar navbar-expand navbar-dark bg-primary">
     <div class="container-fluid px-4">
         <!-- Drawer toggle button-->
@@ -14,7 +15,8 @@
             <!-- Navbar-->
             <ul class="navbar-nav d-none d-lg-flex">
                 <li class="nav-item"><a class="nav-link" href="#">Dasbhoard</a></li>
-                <li class="nav-item"><a class="nav-link" href="#" target="_blank">Documentação</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% static 'documentation.pdf' %}" target="_blank">Documentação</a>
+                </li>
             </ul>
             <!-- Navbar buttons-->
             <div class="d-flex">
@@ -40,7 +42,7 @@
                                 <div class="dropdown-item-content">
                                     <div class="dropdown-item-content-text">
                                         <div class="text-truncate d-inline-block" style="max-width: 18rem">
-                                            [ IMPORTANTE ] Ensaio 18/07 Cancelado
+                                            [ IMPORTANTE ] Feature Não implementada
                                         </div>
                                     </div>
                                     <div class="dropdown-item-content-subtext">Jul 17, 2023 · Administrador</div>
@@ -70,48 +72,9 @@
                                 <i class="material-icons leading-icon">assessment</i>
                                 <div class="dropdown-item-content me-2">
                                     <div class="dropdown-item-content-text">
-                                        Novas músicas foram adicionadas ao repertório!
+                                        Feature Não implementada
                                     </div>
                                     <div class="dropdown-item-content-subtext">Mar 12, 2023 · Repertório</div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider my-0"/>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                <i class="material-icons leading-icon">check_circle</i>
-                                <div class="dropdown-item-content me-2">
-                                    <div class="dropdown-item-content-text">
-                                        Existem avaliações pendentes.
-                                    </div>
-                                    <div class="dropdown-item-content-subtext">Mar 12, 2023 · Músicas</div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider my-0"/>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                <i class="material-icons leading-icon">warning</i>
-                                <div class="dropdown-item-content me-2">
-                                    <div class="dropdown-item-content-text">
-                                        Sua avaliação de ensaio teve um comentário.
-                                    </div>
-                                    <div class="dropdown-item-content-subtext">Mar 8, 2023 · Ensaio</div>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider my-0"/>
-                        </li>
-                        <li>
-                            <a class="dropdown-item py-3" href="#">
-                                <div class="d-flex align-items-center w-100 justify-content-end text-primary">
-                                    <div class="fst-button small">View all</div>
-                                    <i class="material-icons icon-sm ms-1">chevron_right</i>
                                 </div>
                             </a>
                         </li>

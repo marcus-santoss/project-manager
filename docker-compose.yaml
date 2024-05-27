@@ -1,0 +1,14 @@
+services:
+  app:
+    build:
+      context: .
+    hostname: app
+    container_name: app
+    ports:
+      - "8000:8000"
+    restart: always
+    deploy:
+      resources:
+        limits:
+          cpus: 1
+          memory: 512M

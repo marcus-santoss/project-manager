@@ -1,9 +1,13 @@
 """Módulo de Views do App CORE"""
 
-from django.views.generic import TemplateView
+from django.urls import reverse_lazy
+from django.views.generic import RedirectView
 
 
-class Dashboard(TemplateView):
-    """View para HomePage"""
+class HomePageRedirect(RedirectView):
+    """Redireciona para a página de listagem de projetos"""
 
-    template_name = "core/base.html"
+    permanent = True
+
+    def get_redirect_url(self, *args, **kwargs):
+        return reverse_lazy("project:project.list")

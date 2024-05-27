@@ -1,9 +1,8 @@
-migrate:
-	python manage.py makemigrations
-	python manage.py migrate
+up:
+	docker compose up -d --build
 
-collect-static:
-	python manage.py collectstatic --no-input
+down:
+	docker compose down -t0
 
-run:
-	python manage.py runserver
+restart:
+	docker compose restart

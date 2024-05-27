@@ -1,0 +1,122 @@
+site_name: Project Manager
+
+theme:
+  name: material
+  logo: assets/logo.svg
+  favicon: assets/favicon.ico
+  font:
+    code: JetBrains Mono
+  features:
+    - search.suggest
+    - search.highlight
+    - search.share
+    - header.autohide
+    - navigation.footer
+    - announce.dismiss
+    - content.code.copy
+    - content.code.select
+  palette:
+
+    # Palette toggle for light mode
+    - scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+  icon:
+    admonition:
+      note: octicons/tag-16
+      abstract: octicons/checklist-16
+      info: octicons/info-16
+      tip: octicons/squirrel-16
+      success: octicons/check-16
+      question: octicons/question-16
+      warning: octicons/alert-16
+      failure: octicons/x-circle-16
+      danger: octicons/zap-16
+      bug: octicons/bug-16
+      example: octicons/beaker-16
+      quote: octicons/quote-16
+
+nav:
+  - Project Manager: index.md
+  - Models: models.md
+  - Project Views: project_views.md
+  - Task Views: task_views.md
+  - Client Views: client_views.md
+  - Imprimir: print_page
+
+copyright: © 2024 Project Manager. Todos os direitos reservados.
+
+extra:
+  generator: false
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/mercadobitcoin/bi-team-mb-eng/tree/raw-event-insider-reports-requests-ingestion
+      name: Insider Reports Insgestion
+
+plugins:
+  - autorefs
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: false
+            separate_signature: True
+            show_signature_annotations: True
+          paths:
+            - apps
+  - search:
+      lang: pt
+  - minify:
+      minify_html: true
+      minify_js: true
+      minify_css: true
+      htmlmin_opts:
+        remove_comments: true
+      cache_safe: true
+  - print-site:
+      add_to_navigation: true
+      print_page_title: 'Página de Impressão'
+      add_print_site_banner: true
+      # Table of contents
+      add_table_of_contents: true
+      toc_title: 'Índice'
+      toc_depth: 3
+      # Content-related
+      add_full_urls: true
+      enumerate_headings: true
+      enumerate_figures: true
+      add_cover_page: true
+      path_to_pdf: ""
+      include_css: true
+      enabled: true
+
+markdown_extensions:
+  - tables
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  #  - pymdownx.inlinehilite
+  #  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - admonition
+  - pymdownx.details
+
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - toc:
+      permalink: truee:materialx.emoji.to_svg

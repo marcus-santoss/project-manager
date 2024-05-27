@@ -2,10 +2,10 @@
 
 from django.urls import path
 
-from apps.core.views import Dashboard
+from apps.core.views import HomePageRedirect
 
 app_name: str = "core"
 
 urlpatterns: list = [
-    path("", Dashboard.as_view(), name="dashboard"),
+    path("", HomePageRedirect.as_view(), name="dashboard"),
 ]

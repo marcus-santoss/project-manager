@@ -9,6 +9,8 @@ readme = "README.md"
 python = "^3.12"
 django = "^5.0.6"
 django-widget-tweaks = "^1.5.0"
+pyyaml = "^6.0.1"
+gunicorn = "^22.0.0"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -17,7 +19,16 @@ coverage = "^7.5.1"
 pre-commit = "^3.7.1"
 pylint = "^3.2.2"
 model-bakery = "^1.18.0"
-
+mkdocs = "^1.5.3"
+mkdocs-autorefs = "^1.0.1"
+mkdocs-material = "^9.5.17"
+mkdocs-material-extensions = "^1.3.1"
+mkdocs-minify-plugin = "^0.8.0"
+mkdocs-print-site-plugin = "^2.3.6"
+mkdocs-with-pdf = "^0.9.3"
+mkdocstrings = "^0.24.3"
+mkdocstrings-crystal = "^0.3.7"
+mkdocstrings-python = "^1.9.2"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
